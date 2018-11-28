@@ -1,2 +1,2 @@
-# plop-zuul
-Zuul (gateway service) for the MSE supporting PLOP
+# zuul-service
+Zuul (gateway service) for the MSE supporting P3
