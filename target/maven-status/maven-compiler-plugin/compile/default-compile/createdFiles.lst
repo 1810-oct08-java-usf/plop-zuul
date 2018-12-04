@@ -1,0 +1,4 @@
+com\revature\security\JwtConfig.class
+com\revature\RpmZuulServerApplication.class
+com\revature\security\JwtTokenAuthenticationFilter.class
+com\revature\security\SecurityTokenConfig.class
