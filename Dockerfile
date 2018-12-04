@@ -1,5 +1,4 @@
-FROM openjdk:8-jdk-alpine
-ADD . /zuul-service
-WORKDIR /zuul-service
-EXPOSE 8762
-CMD ["java", "-jar", "target/rpm-zuul-server-0.0.1-SNAPSHOT.jar"]
+FROM java:8
+COPY target/rpm-zuul-server-0.0.1-SNAPSHOT.jar /tmp/rpm-zuul-server-0.0.1-SNAPSHOT.jar
+CMD ["java", "-jar", "/tmp/rpm-zuul-server-0.0.1-SNAPSHOT.jar","--server.servlet.context-path=/rpm-zuul","&"]
+#Add .
