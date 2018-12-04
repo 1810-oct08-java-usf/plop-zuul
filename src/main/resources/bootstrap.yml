@@ -1,0 +1,12 @@
+spring: 
+  application: 
+    name: zuul-service
+  cloud:
+    config:
+      uri: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-config
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
