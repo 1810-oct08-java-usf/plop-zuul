@@ -94,3 +94,6 @@ hibernate.cfg.xml
 
 # sonarlint modules
 .sonarlint
+
+# target folder
+target/

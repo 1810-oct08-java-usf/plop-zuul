@@ -65,10 +65,18 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 // Only admins can access any admin endpoints (authentication is still required)
                 .antMatchers("/projects/admin/**").hasRole("ADMIN")
                 
+                /*
+				 * TODO This needs to be refactored to restrict access to the actuator endpoints 
+				 * to only admins
+				 */
                 // Only admins can access actuator endpoints (authentication is still required)
-            	.antMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
+            	.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
             	
-            	// Only admins can access the H2 console for the auth-service
+            	/*
+				 * TODO This needs to be refactored to restrict access to the auth-service 
+				 * H2 console to only admins
+				 */
+				// Anyone can access the H2 console for the auth-service (for now)
             	.antMatchers(HttpMethod.GET, "/auth/h2-console/**").permitAll()
             	.antMatchers(HttpMethod.POST, "/auth/h2-console/**").permitAll()
                 
