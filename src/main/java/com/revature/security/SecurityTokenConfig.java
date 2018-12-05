@@ -62,23 +62,17 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 // Allow all requests attempting to access our auth-service using a POST request
                 .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
                 
-                // Only admins can access any admin endpoints (authentication is still required)
+                // Allow all HTTP requests to the "/auth/register" endpoints (will be narrowed later)
+				.antMatchers("/auth/register/**").permitAll()
+                
+                // Only admins can access any admin endpoints within the project-service
                 .antMatchers("/projects/admin/**").hasRole("ADMIN")
                 
-                /*
-				 * TODO This needs to be refactored to restrict access to the actuator endpoints 
-				 * to only admins
-				 */
-                // Only admins can access actuator endpoints (authentication is still required)
-            	.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-            	
-            	/*
-				 * TODO This needs to be refactored to restrict access to the auth-service 
-				 * H2 console to only admins
-				 */
-				// Anyone can access the H2 console for the auth-service (for now)
-            	.antMatchers(HttpMethod.GET, "/auth/h2-console/**").permitAll()
-            	.antMatchers(HttpMethod.POST, "/auth/h2-console/**").permitAll()
+                /* 
+            	 * Allow unrestricted access to the actuator/info endpoint. Otherwise, AWS ELB cannot
+            	 * perform a health check on the instance and it drains the instances. 
+            	 */
+            	.antMatchers(HttpMethod.GET, "/actuator/info").permitAll()
                 
             	// All other requests must be authenticated
                 .anyRequest().authenticated();

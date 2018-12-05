@@ -87,12 +87,12 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
 		// Exceptions might be thrown in creating the claims (i.e if the token expired)
 		try {
-
+			
 			Claims claims = Jwts.parser().setSigningKey(jwtConfig.getSecret().getBytes()).parseClaimsJws(token)
 					.getBody();
 
 			String username = claims.getSubject();
-
+			
 			/*
 			 * 5. Create auth object
 			 * 
@@ -104,14 +104,19 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			if (username != null) {
 				List<String> authorities = (List<String>) claims.get("authorities");
 
+				authorities.forEach(String::toString);
+				
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null,
 						authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 
 				// 6. Authenticate the user
 				SecurityContextHolder.getContext().setAuthentication(auth);
+				
+				
 			}
-
+			
 		} catch (Exception e) {
+			
 			/*
 			 * In case of failure, make sure it's clear; so we can guarantee that the user
 			 * will not be authenticated
