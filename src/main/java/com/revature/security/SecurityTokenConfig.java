@@ -63,10 +63,10 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
                 
                 // Allow all HTTP requests to the "/auth/register" endpoints (will be narrowed later)
-				.antMatchers("/auth/register/**").permitAll()
+				.antMatchers("auth/users/**").permitAll()
                 
                 // Only admins can access any admin endpoints within the project-service
-                .antMatchers("/projects/admin/**").hasRole("ADMIN")
+                .antMatchers("projects/admin/**").hasRole("ADMIN")
                 
                 /* 
             	 * Allow unrestricted access to the actuator/info endpoint. Otherwise, AWS ELB cannot

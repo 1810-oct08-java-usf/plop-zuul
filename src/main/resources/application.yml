@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: zuul-service
+
+server:
+  port: 8762
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+zuul:
+  ignored-services: '*'
+  routes:
+    auth-service:
+      path: /auth/**
+      service-id: auth-service
+      strip-prefix: false
+      sensitive-headers: Cookie,Set-Cookie
+    project-service:
+      path: /projects/**
+      service-id: project-service
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
