@@ -60,7 +60,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             	
                 // Allow all requests attempting to access our auth-service using a POST request
-                .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
+                .antMatchers(HttpMethod.POST, "/auth-service/" + jwtConfig.getUri()).permitAll()
                 
                 // Allow all HTTP requests to the "/auth/register" endpoints (will be narrowed later)
 				.antMatchers("auth/users/**").permitAll()
