@@ -7,7 +7,6 @@ spring:
 
 eureka:
   instance:
-    hostname: ${HOST_NAME}
     instance-id: ${spring.application.name}:${server.port}
     preferIpAddress: false
     
