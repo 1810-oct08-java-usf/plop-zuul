@@ -3,11 +3,11 @@ spring:
     name: zuul-service
   cloud:
     config:
-        uri: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-config
+        uri: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-config/
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul/
     instance-id: ${spring.application.name}:${random.int}
     
 
