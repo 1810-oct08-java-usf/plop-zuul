@@ -5,3 +5,8 @@ spring:
     config:
         uri: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-config
 
+eureka:
+  instance:
+    instance-id: zuul-service
+    hostname: ${HOST_NAME}
+
