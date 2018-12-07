@@ -7,7 +7,7 @@ spring:
 
 eureka:
   instance:
-    hostname: zuul-service
+    hostname: ${HOST_NAME}
     instance-id: ${spring.application.name}:${server.port}
     preferIpAddress: false
     
