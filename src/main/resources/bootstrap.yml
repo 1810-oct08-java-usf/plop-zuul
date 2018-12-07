@@ -8,5 +8,5 @@ spring:
 eureka:
   instance:
     instance-id: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul
-    hostname: ${HOST_NAME}
+    hostname: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul
 
