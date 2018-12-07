@@ -7,7 +7,8 @@ spring:
 
 eureka:
   instance:
-    instance-id: ${spring.application.name}:${random.value}
+    hostname: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul/
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
     preferIpAddress: false
     
 
