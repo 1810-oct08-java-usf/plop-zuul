@@ -7,6 +7,7 @@ spring:
 
 eureka:
   instance:
-    instance-id: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul
-    hostname: http://rpm-elb-996808586.us-east-1.elb.amazonaws.com/rpm-zuul
+    hostname: localhost
+    instance-id: ${spring.application.name}:${random.int}
+    
 
