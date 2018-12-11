@@ -85,6 +85,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
 		// 3. Get the token
 		String token = header.replaceAll(jwtConfig.getPrefix(), "");
+		System.out.println("Token: " + token);
 
 		// Exceptions might be thrown in creating the claims (i.e if the token expired)
 		try {
@@ -117,6 +118,8 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("JwtTokenAuthenticationFilter: something went wrong");
 			/*
 			 * In case of failure, make sure it's clear; so we can guarantee that the user
 			 * will not be authenticated
