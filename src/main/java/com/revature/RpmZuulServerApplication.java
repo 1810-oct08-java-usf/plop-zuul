@@ -26,6 +26,7 @@ public class RpmZuulServerApplication {
 		config.setAllowCredentials(true);
 		config.addAllowedOrigin("*");
 		config.addAllowedHeader("*");
+		config.addExposedHeader("authorization");
 		config.addAllowedMethod("OPTIONS");
 		config.addAllowedMethod("GET");
 		config.addAllowedMethod("POST");
