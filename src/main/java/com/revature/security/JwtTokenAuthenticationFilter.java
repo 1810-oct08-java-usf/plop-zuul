@@ -117,7 +117,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			}
 			
 		} catch (Exception e) {
-			
 			/*
 			 * In case of failure, make sure it's clear; so we can guarantee that the user
 			 * will not be authenticated

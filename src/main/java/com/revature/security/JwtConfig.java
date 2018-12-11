@@ -9,13 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 public class JwtConfig {
 
 	/*
-	 * Used to override the default path "/login", authentication requests will be
-	 * resolved through the "/auth" endpoint.
-	 */
-	@Value("${security.jwt.uri:/auth/**}")
-	private String Uri;
-
-	/*
 	 * Indicates the name of the HTTP header that will contain the prefix and JWT as
 	 * a value
 	 */
@@ -38,16 +31,8 @@ public class JwtConfig {
 	 * TODO This should be refactored to use an environment variable
 	 */
 	// Used as a key with the encryption algorithm to generate JWTs
-	@Value("${security.jwt.secret:JwtSecretKey}")
+	@Value("${security.jwt.secret}")
 	private String secret;
-
-	public String getUri() {
-		return Uri;
-	}
-
-	public void setUri(String uri) {
-		Uri = uri;
-	}
 
 	public String getHeader() {
 		return header;
