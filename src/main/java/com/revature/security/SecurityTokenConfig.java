@@ -63,9 +63,9 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 				 */
 				.authorizeRequests()
 
-				.antMatchers("/auth/**").permitAll()
-				
-				.antMatchers(HttpMethod.GET, "/actuator/info").permitAll()
+				.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				.mvcMatchers("/auth/**").permitAll()
+				.mvcMatchers(HttpMethod.GET, "/actuator/info").permitAll()
 
 				// All other requests must be authenticated
 				.anyRequest().authenticated();
