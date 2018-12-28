@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.netflix.zuul.context.RequestContext;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -113,7 +114,8 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
 				// 6. Authenticate the user
 				SecurityContextHolder.getContext().setAuthentication(auth);
-				
+				RequestContext ctx = RequestContext.getCurrentContext();
+				ctx.addZuulRequestHeader("RPM_ZUUL_ACCESS_HEADER", "Trevin is a meanie");
 				
 			}
 			
