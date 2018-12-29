@@ -1,6 +1,7 @@
 package com.revature.security;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +32,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 	 * Constructor for JwtTokenAuthenticationFilter that instantiates the JwtConfig
 	 * field.
 	 * 
-	 * @param jwtConfig
-	 *            Provides configuration for validating JWTs
+	 * @param jwtConfig Provides configuration for validating JWTs
 	 */
 	public JwtTokenAuthenticationFilter(JwtConfig jwtConfig) {
 		this.jwtConfig = jwtConfig;
@@ -44,19 +44,30 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 	 * to unrestricted endpoints). The token is valid only if it has the proper
 	 * prefix, a proper principal, and is unexpired.
 	 * 
-	 * @param req
-	 *            Provides information regarding the HTTP request.
+	 * @param req   Provides information regarding the HTTP request.
 	 * 
-	 * @param resp
-	 *            Provides information regarding the HTTP response.
+	 * @param resp  Provides information regarding the HTTP response.
 	 * 
-	 * @param chain
-	 *            Used to pass the HTTP request and response objects to the next
-	 *            filter in the chain.
+	 * @param chain Used to pass the HTTP request and response objects to the next
+	 *              filter in the chain.
 	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
 			throws ServletException, IOException {
+		System.out.println("before");
+
+		HttpServletRequest httpRequest = req;
+		Enumeration<String> ems2 = httpRequest.getHeaderNames();
+		while (ems2.hasMoreElements()) {
+			String temp = ems2.nextElement();
+			System.out.println(temp + "    " + httpRequest.getHeader(temp));
+		}
+
+//		Enumeration<String> ems2 = response.getHeaderNames();
+//		while (ems2.hasMoreElements()) {
+//			String temp = ems2.nextElement();
+//			System.out.println(temp + "    " + httpRequest.getHeader(temp));
+//		}
 
 		/*
 		 * 1. Get the authorization header. Tokens are supposed to be passed in the auth
@@ -90,12 +101,12 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
 		// Exceptions might be thrown in creating the claims (i.e if the token expired)
 		try {
-			
+
 			Claims claims = Jwts.parser().setSigningKey(jwtConfig.getSecret().getBytes()).parseClaimsJws(token)
 					.getBody();
 
 			String username = claims.getSubject();
-			
+
 			/*
 			 * 5. Create auth object
 			 * 
@@ -108,7 +119,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 				List<String> authorities = (List<String>) claims.get("authorities");
 
 				authorities.forEach(String::toString);
-				
+
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null,
 						authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 
@@ -116,9 +127,9 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 				RequestContext ctx = RequestContext.getCurrentContext();
 				ctx.addZuulRequestHeader("RPM_ZUUL_ACCESS_HEADER", "Trevin is a meanie");
-				
+
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("JwtTokenAuthenticationFilter: something went wrong");
@@ -128,7 +139,14 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			 */
 			SecurityContextHolder.clearContext();
 		}
+		System.out.println("before");
 
+
+		Enumeration<String> ems3 = httpRequest.getHeaderNames();
+		while (ems3.hasMoreElements()) {
+			String temp = ems3.nextElement();
+			System.out.println(temp + "    " + httpRequest.getHeader(temp));
+		}
 		// Go to the next filter in the filter chain
 		chain.doFilter(req, resp);
 	}
