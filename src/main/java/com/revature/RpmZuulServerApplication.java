@@ -13,6 +13,7 @@ public class RpmZuulServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RpmZuulServerApplication.class, args);
 		//test
+		//test2
 	}
 	
 }
