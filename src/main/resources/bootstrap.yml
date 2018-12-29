@@ -3,7 +3,7 @@ spring:
     name: zuul-service
   cloud:
     config:
-        uri: http://rpm-alb-1871573764.eu-west-2.elb.amazonaws.com/config
+        uri: ${CONFIG_SERVICE_URL}
 
     
 security:
