@@ -31,6 +31,7 @@ public class ZuulAspects {
 		//logger.error(ex.getMessage());
 	}
 	
+	
 	@After("execution(* com.revature.security.JwtTokenAuthenticationFilter.doFilterInternal(..))")
 	public void afterDoFilterInternal(JoinPoint joinPoint){
 		HttpServletRequest request =  (HttpServletRequest) joinPoint.getArgs()[0];
