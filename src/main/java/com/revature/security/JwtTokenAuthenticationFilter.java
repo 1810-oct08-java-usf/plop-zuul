@@ -127,6 +127,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 				RequestContext ctx = RequestContext.getCurrentContext();
 				ctx.addZuulRequestHeader("RPM_ZUUL_ACCESS_HEADER", "2Trevin is a meanie2");
+				System.out.println("We added header, hopefully");
 
 			}
 
