@@ -18,6 +18,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 
 	private JwtConfig jwtConfig;
+	private ZuulConfig zuulConfig;
 
 	/**
 	 * Allows configuring web based security for specific http requests. By default
@@ -51,7 +52,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 				/*
 				 * Add a filter that will validate the token attached as an HTTP header
 				 */
-				.addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+				.addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig, zuulConfig), UsernamePasswordAuthenticationFilter.class)
 
 				/*
 				 * Allows for the access to specific endpoints to be restricted and for others
@@ -69,14 +70,23 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated();
 	}
 
+	@Bean
+	public JwtConfig jwtConfig() {
+		return new JwtConfig();
+	}
+	
 	@Autowired
 	public void setJwtConfig(JwtConfig jwtConfig) {
 		this.jwtConfig = jwtConfig;
 	}
-
+	
 	@Bean
-	public JwtConfig jwtConfig() {
-		return new JwtConfig();
+	public ZuulConfig zuulConfig() {
+		return new ZuulConfig();
+	}
+	@Autowired
+	public void setZuulConfig(ZuulConfig zuulConfig) {
+		this.zuulConfig = zuulConfig;
 	}
 	
 	@Bean
