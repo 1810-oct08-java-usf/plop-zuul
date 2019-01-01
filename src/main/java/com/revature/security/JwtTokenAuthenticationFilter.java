@@ -77,6 +77,13 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 		 * "Bearer ")
 		 */
 		if (header == null || !header.startsWith(jwtConfig.getPrefix())) {
+			/* Add the Zuul header to validate that requests received by Auth
+			* This may seem weird but the salt and password are flipped for a reason
+			* This is so that the publicly accessible regions of the Auth service are
+			* accessible using a different but linked Zuul Header
+			*/
+			RequestContext ctx = RequestContext.getCurrentContext();
+			ctx.addZuulRequestHeader(zuulConfig.getHeader(), get_SHA_512_SecureHash(zuulConfig.getSalt(), zuulConfig.getSecret()));
 			chain.doFilter(req, resp);
 			return;
 		}
