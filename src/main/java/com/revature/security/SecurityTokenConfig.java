@@ -29,9 +29,6 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println(zuulConfig.getHeader());
-		System.out.println(zuulConfig.getSalt());
-		System.out.println(zuulConfig.getSecret());
 		http
 				/*
 				 * Disables the protection against Cross-Site Request Forgery (CSRF), otherwise
@@ -73,11 +70,16 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated();
 	}
 
+	@Bean
+	public JwtConfig jwtConfig() {
+		return new JwtConfig();
+	}
+	
 	@Autowired
 	public void setJwtConfig(JwtConfig jwtConfig) {
 		this.jwtConfig = jwtConfig;
 	}
-
+	
 	@Bean
 	public ZuulConfig zuulConfig() {
 		return new ZuulConfig();
@@ -85,11 +87,6 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void setZuulConfig(ZuulConfig zuulConfig) {
 		this.zuulConfig = zuulConfig;
-	}
-
-	@Bean
-	public JwtConfig jwtConfig() {
-		return new JwtConfig();
 	}
 	
 	@Bean
