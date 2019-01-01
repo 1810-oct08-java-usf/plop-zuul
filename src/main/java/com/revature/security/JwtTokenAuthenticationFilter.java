@@ -1,7 +1,9 @@
 package com.revature.security;
 
 import java.io.IOException;
-import java.util.Enumeration;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,10 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.netflix.zuul.context.RequestContext;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -35,9 +33,10 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
 	/**
 	 * Constructor for JwtTokenAuthenticationFilter that instantiates the JwtConfig
-	 * field.
+	 * and ZuulConfig fields.
 	 * 
 	 * @param jwtConfig Provides configuration for validating JWTs
+	 * @param zuulConfig Provides configuration for validating that requests came through Zuul
 	 */
 	public JwtTokenAuthenticationFilter(JwtConfig jwtConfig, ZuulConfig zuulConfig) {
 		this.jwtConfig = jwtConfig;
@@ -114,6 +113,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			 * SimpleGrantedAuthority is an implementation of that interface.
 			 */
 			if (username != null) {
+				@SuppressWarnings("unchecked")
 				List<String> authorities = (List<String>) claims.get("authorities");
 
 				authorities.forEach(String::toString);
