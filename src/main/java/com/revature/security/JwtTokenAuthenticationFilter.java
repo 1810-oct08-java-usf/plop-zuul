@@ -57,20 +57,15 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 	 *              filter in the chain.
 	 */
 	@Override
-	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
+	public void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
 			throws ServletException, IOException {
-		/*HttpServletRequest httpRequest = req;
-		Enumeration<String> ems2 = httpRequest.getHeaderNames();
-		while (ems2.hasMoreElements()) {
-			String temp = ems2.nextElement();
-			System.out.println(temp + "    " + httpRequest.getHeader(temp));
-		}*/
 
 		/*
 		 * 1. Get the authorization header. Tokens are supposed to be passed in the auth
 		 * header
 		 */
-		String header = req.getHeader(jwtConfig.getHeader());
+		String jwtHeader = jwtConfig.getHeader();
+		String header = req.getHeader(jwtHeader);
 
 		/*
 		 * 2. Validate the auth header and check the prefix (which we defined to be
@@ -82,7 +77,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			* This is so that the publicly accessible regions of the Auth service are
 			* accessible using a different but linked Zuul Header
 			*/
-			RequestContext ctx = RequestContext.getCurrentContext();
+			RequestContext ctx = this.staticWrapperRequestContext();
 			ctx.addZuulRequestHeader(zuulConfig.getHeader(), get_SHA_512_SecureHash(zuulConfig.getSalt(), zuulConfig.getSecret()));
 			chain.doFilter(req, resp);
 			return;
@@ -146,13 +141,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			SecurityContextHolder.clearContext();
 		}
 		System.out.println("before");
-
-		// This shows the current list of headers on the request object
-/*		Enumeration<String> ems3 = httpRequest.getHeaderNames();
-		while (ems3.hasMoreElements()) {
-			String temp = ems3.nextElement();
-			System.out.println(temp + "    " + httpRequest.getHeader(temp));
-		}*/
 		
 		// Go to the next filter in the filter chain
 		chain.doFilter(req, resp);
@@ -173,5 +161,16 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			e.printStackTrace();
 		}
 		return generatedPassword;
+	}
+	
+	/**
+	 *  This is a function to wrap a static method so that we can test it easier.
+	 * 	
+	 * @Author Alonzo Muncy (190107 Java-Spark-USF)
+	 * @return RequestContext
+	 */
+	public RequestContext staticWrapperRequestContext() {
+		return RequestContext.getCurrentContext();
+		
 	}
 }
