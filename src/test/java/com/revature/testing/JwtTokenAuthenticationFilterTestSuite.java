@@ -1,33 +1,25 @@
 package com.revature.testing;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.aspectj.lang.JoinPoint;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.revature.aop.ZuulAspects;
+import com.netflix.zuul.context.RequestContext;
 import com.revature.security.JwtConfig;
 import com.revature.security.JwtTokenAuthenticationFilter;
 import com.revature.security.ZuulConfig;
-import com.netflix.zuul.context.RequestContext;
 
 /** 
  * Test Suite for the JwtTokenAuthenticationFilter class.  
