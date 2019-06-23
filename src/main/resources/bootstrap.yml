@@ -1,12 +1,11 @@
 spring:
   profiles:
-    active:
-    - local
+    active: local
   application: 
     name: zuul-service
   cloud:
     config:
-        uri: ${CONFIG_SERVICE_URL}
+      uri: ${CONFIG_SERVICE_URL}
 
 security:
   jwt:
@@ -19,6 +18,7 @@ security:
 #Configuration settings that used when the local profile is active
 spring:
   profiles: local
+  application:    name: zuul-service
   cloud:
     config:
       uri:
