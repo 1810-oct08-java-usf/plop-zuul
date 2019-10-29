@@ -4,51 +4,47 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class ZuulConfig {
 
-	/*
-	 * Indicates the name of the HTTP header that will contain the prefix and Zuul
-	 * header as a value
-	 */
-	@Value("${security.zsign.header:RPM_ZUUL_ACCESS_HEADER}")
-	private String header;
+  /*
+   * Indicates the name of the HTTP header that will contain the prefix and Zuul
+   * header as a value
+   */
+  @Value("${security.zsign.header:RPM_ZUUL_ACCESS_HEADER}")
+  private String header;
 
-	/*
-	 * Indicates the salt value that will be combined with the secret to form the
-	 * hash that will be transferred with the request
-	 */
-	@Value("${security.zsign.salt}")
-	private String salt;
-	/*
-	 * TODO This should be refactored to use an environment variable
-	 */
-	// Used as a key with the encryption algorithm SHA-512 to generate hash
-	@Value("${security.zsign.secret}")
-	private String secret;
+  /*
+   * Indicates the salt value that will be combined with the secret to form the
+   * hash that will be transferred with the request
+   */
+  @Value("${security.zsign.salt}")
+  private String salt;
 
-	public ZuulConfig() {
-	}
+  // Used as a key with the encryption algorithm SHA-512 to generate hash
+  @Value("${security.zsign.secret}")
+  private String secret;
 
-	public String getHeader() {
-		return header;
-	}
+  public ZuulConfig() {}
 
-	public void setHeader(String header) {
-		this.header = header;
-	}
+  public String getHeader() {
+    return header;
+  }
 
-	public String getSalt() {
-		return salt;
-	}
+  public void setHeader(String header) {
+    this.header = header;
+  }
 
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
+  public String getSalt() {
+    return salt;
+  }
 
-	public String getSecret() {
-		return secret;
-	}
+  public void setSalt(String salt) {
+    this.salt = salt;
+  }
 
-	public void setSecret(String secret) {
-		this.secret = secret;
-	}
+  public String getSecret() {
+    return secret;
+  }
 
+  public void setSecret(String secret) {
+    this.secret = secret;
+  }
 }
