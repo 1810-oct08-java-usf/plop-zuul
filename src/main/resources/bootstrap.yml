@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: local
+  application: 
+    name: zuul-service
+  cloud:
+    config:
+      uri: ${CONFIG_SERVICE_URL}
+
+security:
+  jwt:
+    secret: ${RPM_JWT_SECRET}
+  zsign:
+    secret: ${RPM_ZUUL_ACCESS_HEADER}
+    salt: ${RPM_ZUUL_ACCESS_SALT}
+    
+---
+#Configuration settings that used when the local profile is active
+spring:
+  profiles: local
+  application:    name: zuul-service
+  cloud:
+    config:
+      uri:
+      - http://config-service.vmmxembj3j.us-east-2.elasticbeanstalk.com/
